@@ -1,4 +1,4 @@
-##Caffe
+#Caffe
 
 ## Installation
 Instructions for Ubuntu 16.04.5 LTS  
@@ -29,9 +29,12 @@ If the last command fails with: **fatal error: hdf5.h: No such file or directory
 ```
 vi Makefile.config
 ```
-Add ```/usr/include/hdf5/serial/```  at the end of line **INCLUDE_DIRS**
+Add ```/usr/include/hdf5/serial/```  at the end of line **INCLUDE_DIRS**  
 Exit vi
 ```
+The result should look like this:
+![Alt text](/Screenshots/compilation_01.png?raw=true "Comp_01")
+
 find /usr/lib -name hdf5
 ```
 Copy the return string, in my case: **/usr/lib/aarch64-linux-gnu/hdf5**
@@ -42,6 +45,8 @@ Add the return string + **/serial/** to **LIBRARY_DIRS** in my case:
 ```
 /usr/lib/aarch64-linux-gnu/hdf5/serial/ 
 ```
+The result should look like this:
+![Alt text](/Screenshots/compilation_02.png?raw=true "Comp_02")
 Exit vi
 ```
 make clean
@@ -49,9 +54,7 @@ make all
 make test
 make runtest
 ```
+The result should look like this:
+![Alt text](/Screenshots/compilation_03.png?raw=true "Comp_03")
 
-
-
-
-
-
+*Some commands take a few minutes/hours to finish*
