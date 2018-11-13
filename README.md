@@ -25,6 +25,7 @@ cd ..
 cp Makefile.config.example Makefile.config
 make all
 ```
+*Note: the for req in ... command took ~60 minutes*  
 If the last command fails with: **fatal error: hdf5.h: No such file or directory**
 ```
 vi Makefile.config
@@ -56,4 +57,4 @@ make runtest
 The result should look like this:  
 ![Alt text](/Screenshots/compilation_03.png?raw=true "Comp_03")
 
-*Some commands take a few minutes/hours to finish*
+*Note: make all took ~45 minutes, make runtest took ~60 minutes*
