@@ -26,6 +26,7 @@ cp Makefile.config.example Makefile.config
 make all
 ```
 *Note: the for req in ... command took ~60 minutes*  
+
 If the last command fails with: **fatal error: hdf5.h: No such file or directory**
 ```
 vi Makefile.config
