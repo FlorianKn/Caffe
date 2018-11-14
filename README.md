@@ -58,4 +58,24 @@ make runtest
 The result should look like this:  
 ![Alt text](/Screenshots/compilation_03.png?raw=true "Comp_03")
 
-*Note: make all took ~45 minutes, make runtest took ~60 minutes*
+*Note: make all took ~45 minutes, make runtest took ~60 minutes*  
+## Training a Network  
+1. Data preperation
+2. Model defintion
+3. Solver defintion
+4. Model training
+
+### Data preperation
+Reference (data): https://www.kaggle.com/c/facial-keypoints-detection/data  
+To prepare the kaggle dataset (CSV) all data has to be converted to hd5  
+Requirements - python-dateutil 2.5.0 and sklearn:
+```
+sudo pip install python-dateutil==2.5.0 
+sudo apt install python-sklearn
+```
+Run kfkd.py to convert the CSV to hd5  
+```
+cd dataset
+python kfkd.py
+```
+*Note the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
