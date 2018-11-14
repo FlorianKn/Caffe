@@ -65,10 +65,10 @@ The result should look like this:
 3. Solver defintion
 4. Model training
 
-### Data preperation
+### 1.Data preperation
 Reference (data): https://www.kaggle.com/c/facial-keypoints-detection/data  
 To prepare the kaggle dataset (CSV) all data has to be converted to hd5  
-Requirements - python-dateutil 2.5.0 and sklearn:
+Requirements python-dateutil 2.5.0 and sklearn:
 ```
 sudo pip install python-dateutil==2.5.0 
 sudo apt install python-sklearn
@@ -78,4 +78,6 @@ Run kfkd.py to convert the CSV to hd5
 cd dataset
 python kfkd.py
 ```
-*Note the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
+*Note: the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
+
+### 2.Model definition
