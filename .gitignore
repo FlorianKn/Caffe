@@ -71,6 +71,8 @@ models/*
 *leveldb
 *lmdb
 *.csv
+*.h5
+*.txt
 # build, distribute, and bins (+ python proto bindings)
 build
 .build_debug/*
