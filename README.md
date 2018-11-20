@@ -19,9 +19,6 @@ mkdir .local/install
 cd .local/install
 git clone https://github.com/BVLC/caffe.git
 cd caffe
-cd python/
-for req in $(cat requirements.txt); do sudo pip install $req; done
-cd ..
 cp Makefile.config.example Makefile.config
 make all
 ```
@@ -80,4 +77,38 @@ python kfkd.py
 ```
 *Note: the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
 
-### 2.Model definition
+### 2.Model definition  
+The architecture of a network is defined in a **.prototxt**  
+An example of a simple logistic regression classifier can be seen below (Reference: http://caffe.berkeleyvision.org/tutorial/net_layer_blob.html):  
+```
+name: "LogReg"
+layer {
+  name: "mnist"
+  type: "Data"
+  top: "data"
+  top: "label"
+  data_param {
+    source: "input_leveldb"
+    batch_size: 64
+  }
+}
+layer {
+  name: "ip"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip"
+  inner_product_param {
+    num_output: 2
+  }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "ip"
+  bottom: "label"
+  top: "loss"
+}
+```
+
+#### 2.1 Visualizing architecture [Optional]  
+If you want to visualize your architecture you have to configure pycaffe 
