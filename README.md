@@ -56,6 +56,7 @@ The result should look like this:
 
 *Note: make all took ~45 minutes, make runtest took ~60 minutes*  
 ## Training a Network  
+Steps:
 1. Data preperation
 2. Model defintion
 3. Solver defintion
@@ -78,8 +79,7 @@ python kfkd.py
 *Note: the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
 
 ### 2.Model definition  
-The architecture of a network is defined in a **.prototxt**  
-An example of a simple logistic regression classifier can be seen below (Reference: http://caffe.berkeleyvision.org/tutorial/net_layer_blob.html):  
+The architecture of a network is defined in a **.prototxt**. An example of an architecture (simple logistic regression classifier) can be seen below (Reference: http://caffe.berkeleyvision.org/tutorial/net_layer_blob.html):  
 ```
 name: "LogReg"
 layer {
@@ -109,14 +109,15 @@ layer {
   top: "loss"
 }
 ```
-
+*Find this file in models/Arch_Baseline/*
 #### 2.1 Visualizing architecture [Optional]  
 If you want to print your network architecture you have to configure pycaffe. Therefore the **Makefile.config** needs to be adapted.  
-*Note: I used python2.7.12, numpy has to be installed.*  
-Find the paths to Python.h and numpy/arrayobject.h on your machine. Add the them to **PYTHON_INCLUDE** of your Makefile.config. See my result below:  
+*Note: I use python2.7.12 and numpy needs to be installed.*  
+Find the paths to **Python.h** and **numpy/arrayobject.h** on your machine. Add the them to **PYTHON_INCLUDE** in your Makefile.config. See my result below:  
 ![Alt text](/Screenshots/pycaffe_01.png?raw=true "pyC_01")  
 Find the path to libpythonX.X.so and add it to **PYTHON_LIB**. See my result below:  
 ![Alt text](/Screenshots/pycaffe_02.png?raw=true "pyC_02")  
+Save those changes and run the following commands:
 ```
 make clean
 make all
@@ -124,11 +125,14 @@ make test
 make runtest
 ```  
 Set the PYTHONPATH variable in your ~/.bashrc to the caffe python with ```export PYTHONPATH=<caffe-home>/python:$PYTHONPATH```. In my case ```export PYTHONPATH=/home/nvidia/.local/install/caffe/python:$PYTHONPATH```  
-Install missing dependencies and compile pycaffe
+
+Install missing dependencies and compile pycaffe, therefore run:
 ```
 for req in $(cat python/requirements.txt); do sudo pip install $req; done
 make pycaffe
 ```
+*Reference to configure pycaffe: http://installing-caffe-the-right-way.wikidot.com/start*
+
 To print the architecture pydot and graphviz needs to be installed.
 ```
 sudo pip install pydot
@@ -137,6 +141,4 @@ sudo apt-get install graphviz
 Command for printing is ```python /my/directory/caffe/python/draw_net.py /my/directory/caffe/my/model/myModel.prototxt /my/directory/caffe/myImages/myModel.png```. In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/baseline.prototxt /home/nvidia/.local/install/caffe/architectureImg/baseline.png```.  
 The image below shows the printed architecture of the .prototxt defined above:
 ![Alt text](/architectureImg/baseline.png?raw=true "bl_02") 
-*Reference to configure pycaffe: http://installing-caffe-the-right-way.wikidot.com/start*
-### c
-
+### 3.Solver defintion
