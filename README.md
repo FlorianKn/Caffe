@@ -138,7 +138,8 @@ To print the architecture pydot and graphviz needs to be installed.
 sudo pip install pydot
 sudo apt-get install graphviz
 ```
-Command for printing is ```python /my/directory/caffe/python/draw_net.py /my/directory/caffe/my/model/myModel.prototxt /my/directory/caffe/myImages/myModel.png```. In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/baseline.prototxt /home/nvidia/.local/install/caffe/architectureImg/baseline.png```.  
+Command for printing is ```python /my/directory/caffe/python/draw_net.py /my/directory/caffe/my/model/myModel.prototxt /my/directory/caffe/myImages/myModel.png```.  
+In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/baseline.prototxt /home/nvidia/.local/install/caffe/architectureImg/baseline.png```.  
 The image below shows the printed architecture of the .prototxt defined above:
 ![Alt text](/architectureImg/baseline.png?raw=true "bl_02") 
 ### 3.Solver defintion
