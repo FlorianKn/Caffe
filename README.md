@@ -79,17 +79,18 @@ python kfkd.py
 *Note: the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
 
 ### 2.Model definition  
-The architecture of a network is defined in a **.prototxt**. An example of an architecture (simple logistic regression classifier) can be seen below (Reference: http://caffe.berkeleyvision.org/tutorial/net_layer_blob.html):  
+The architecture of a network is defined in a **.prototxt**. An example of an architecture can be seen below:  
 ```
-name: "LogReg"
+name: "Arch_Baseline"
 layer {
-  name: "mnist"
-  type: "Data"
+  name: "Input"
+  type: "HDF5Data"
   top: "data"
   top: "label"
-  data_param {
-    source: "input_leveldb"
-    batch_size: 64
+  hdf5_data_param {
+    source: "caffe/dataset/train_data_list.txt"
+    batch_size: 128
+    shuffle: true
   }
 }
 layer {
@@ -98,12 +99,12 @@ layer {
   bottom: "data"
   top: "ip"
   inner_product_param {
-    num_output: 2
+    num_output: 500
   }
 }
 layer {
   name: "loss"
-  type: "SoftmaxWithLoss"
+  type: "EuclideanLoss"
   bottom: "ip"
   bottom: "label"
   top: "loss"
