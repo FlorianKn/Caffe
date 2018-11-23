@@ -72,7 +72,7 @@ sudo apt install python-sklearn
 mkdir dataset
 cd dataset  
 ```
-Copy kfkd.py from dataset/ located in this repository. The script converts CSV to hd5     
+Copy kfkd.py from **dataset/** located in this repository. The script converts CSV to hd5.     
 ```
 python kfkd.py
 ```
@@ -113,7 +113,7 @@ layer {
 #### 2.1 Visualizing architecture [Optional]  
 If you want to print your network architecture you have to configure pycaffe. Therefore the **Makefile.config** needs to be adapted.  
 *Note: I use python2.7.12 and numpy needs to be installed.*  
-Find the paths to **Python.h** and **numpy/arrayobject.h** on your machine. Add the them to **PYTHON_INCLUDE** in your Makefile.config. See my result below:  
+Find the paths to **Python.h** and **numpy/arrayobject.h** on your machine. Add them to **PYTHON_INCLUDE** in your Makefile.config. See my result below:  
 ![Alt text](/Screenshots/pycaffe_01.png?raw=true "pyC_01")  
 Find the path to libpythonX.X.so and add it to **PYTHON_LIB**. See my result below:  
 ![Alt text](/Screenshots/pycaffe_02.png?raw=true "pyC_02")  
