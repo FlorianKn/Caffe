@@ -177,7 +177,7 @@ solver_mode: GPU
 
 test_compute_loss: true
 ```
-*Find this file in /models/Arch_Baseline/solver.prototxt*. 
+*Find this file in /models/Arch_Baseline/solver.prototxt*.   
 All parameters to configure your network: https://github.com/BVLC/caffe/wiki/Solver-Prototxt
 ### 4.Model training
 Start the training with the following command:
