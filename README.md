@@ -177,12 +177,14 @@ solver_mode: GPU
 
 test_compute_loss: true
 ```
-*Find this file in /models/Arch_Baseline/solver.prototxt*
-Find all parameters to configure your network here: https://github.com/BVLC/caffe/wiki/Solver-Prototxt
+*Find this file in /models/Arch_Baseline/solver.prototxt*. 
+All parameters to configure your network: https://github.com/BVLC/caffe/wiki/Solver-Prototxt
 ### 4.Model training
 Start the training with the following command:
 ```
 /home/nvidia/.local/install/caffe/build/tools/caffe train --solver /home/nvidia/.local/install/caffe/models/Arch_Baseline/solver.prototxt 2>&1 | tee /home/nvidia/.local/install/caffe/models/Arch_Baseline/Arch_train.log
 ```
-*Note: you need to adapt the paths*  
-The ```2>&1 | tee .../Arch_train.log``` part of the command saves screen outputsto a log file.
+*Note: you need to adapt the paths*.  
+
+The ```2>&1 | tee .../Arch_train.log``` part of the command saves screen output
+to a log file.
