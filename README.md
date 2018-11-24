@@ -88,7 +88,7 @@ layer {
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "caffe/dataset/train_data_list.txt"
+    source: "dataset/train_data_list.txt"
     batch_size: 128
     shuffle: true
   }
@@ -99,7 +99,7 @@ layer {
   bottom: "data"
   top: "ip"
   inner_product_param {
-    num_output: 500
+    num_output: 30
   }
 }
 layer {
