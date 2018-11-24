@@ -144,3 +144,36 @@ In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/
 The image below shows the printed architecture of the .prototxt defined above:
 ![Alt text](/architectureImg/baseline.png?raw=true "bl_02") 
 ### 3.Solver defintion
+The solver orchestrates model optimization by coordinating the network’s forward inference and backward gradients to form parameter updates that attempt to improve the loss.  
+Reference: http://caffe.berkeleyvision.org/tutorial/solver.html
+
+```
+net: "models/Arch_Baseline/baseline.prototxt"
+
+#Nesterov’s Accelerated Gradient
+type: "Nesterov"
+test_iter: 2
+# testing every 100 iterations
+test_interval: 100
+
+# learning rate
+base_lr: 0.001
+lr_policy: "step"
+gamma: 0.2
+#drop learning rate every 1000 iterations
+stepsize: 1000
+momentum: 0.9
+
+weight_decay: 0.01
+
+display: 100
+#train for 3000 iterations
+max_iter: 3000
+
+snapshot: 500
+snapshot_prefix: "/home/nvidia/.local/install/caffe/models/Arch_Baseline/"
+solver_mode: GPU
+
+test_compute_loss: true
+```
+### 4.Model training
