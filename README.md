@@ -110,7 +110,7 @@ layer {
   top: "loss"
 }
 ```
-*Find this file in models/Arch_Baseline/*
+*Find this file in models/Arch_Baseline/baseline.prototxt*
 #### 2.1 Visualizing architecture [Optional]  
 If you want to print your network architecture you have to configure pycaffe. Therefore the **Makefile.config** needs to be adapted.  
 *Note: I use python2.7.12 and numpy needs to be installed.*  
@@ -143,10 +143,11 @@ Command for printing is ```python /my/directory/caffe/python/draw_net.py /my/dir
 In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/baseline.prototxt /home/nvidia/.local/install/caffe/architectureImg/baseline.png```.  
 The image below shows the printed architecture of the .prototxt defined above:
 ![Alt text](/architectureImg/baseline.png?raw=true "bl_02") 
-### 3.Solver defintion
+### 3.Solver definition
 The solver orchestrates model optimization by coordinating the network’s forward inference and backward gradients to form parameter updates that attempt to improve the loss.  
 Reference: http://caffe.berkeleyvision.org/tutorial/solver.html
 
+See my solver below:
 ```
 net: "models/Arch_Baseline/baseline.prototxt"
 
@@ -176,4 +177,5 @@ solver_mode: GPU
 
 test_compute_loss: true
 ```
+*Find this file in /models/Arch_Baseline/solver.prototxt*
 ### 4.Model training
