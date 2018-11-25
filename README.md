@@ -61,6 +61,7 @@ Steps:
 2. Model defintion
 3. Solver defintion
 4. Model training
+5. Model testing
 
 ### 1.Data preperation
 Reference (data): https://www.kaggle.com/c/facial-keypoints-detection/data  
@@ -92,20 +93,245 @@ layer {
     batch_size: 128
     shuffle: true
   }
+  include: { phase: TRAIN }
 }
 layer {
-  name: "ip"
-  type: "InnerProduct"
+  name: "Input"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  hdf5_data_param {
+    source: "dataset/val_data_list.txt"
+    batch_size: 540
+  }
+  include: { phase: TEST }
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
   bottom: "data"
-  top: "ip"
+  top: "conv1"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 20
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dropout1"
+  type: "Dropout"
+  bottom: "pool1"
+  top: "pool1"
+  dropout_param {
+    dropout_ratio: 0.1
+  }
+}
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 48
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu2"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dropout2"
+  type: "Dropout"
+  bottom: "pool2"
+  top: "pool2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "conv3"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+ }
+ layer {
+  name: "relu3"
+  type: "ReLU"
+  bottom: "conv3"
+  top: "conv3"
+}
+layer {
+  name: "dropout3"
+  type: "Dropout"
+  bottom: "conv3"
+  top: "conv3"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc5"
+  type: "InnerProduct"
+  bottom: "conv3"
+  top: "fc5"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  #weight_decay: 1
+  #weight_decay: 0
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 500
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "drop4"
+  type: "Dropout"
+  bottom: "fc5"
+  top: "fc5"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc6"
+  type: "InnerProduct"
+  bottom: "fc5"
+  top: "fc6"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  #weight_decay: 1
+  #weight_decay: 0
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
   inner_product_param {
     num_output: 30
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
   }
 }
 layer {
   name: "loss"
   type: "EuclideanLoss"
-  bottom: "ip"
+  bottom: "fc6"
   bottom: "label"
   top: "loss"
 }
@@ -188,3 +414,13 @@ Start the training with the following command:
 
 The ```2>&1 | tee .../Arch_train.log``` part of the command saves screen output
 to a log file.
+ 
+If you want to plot your training curve copy **caffe/python/plot_learning_curve.py** and run the following command:  
+```
+mkdir learningCurve 
+python /home/nvidia/.local/install/caffe/python/plot_learning_curve.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/Arch_train.log /home/nvidia/.local/install/caffe/learningCurve/baseline_learning_curve.png
+```
+*Note: you need to adapt your path to your caffe directory in the python script (see line 24). Reference: https://github.com/adilmoujahid/deeplearning-cats-dogs-tutorial.*
+
+See the learning curve of my network below:  
+![Alt text](/learningCurve/baseline_learning_curve.png?raw=true "curve_01")

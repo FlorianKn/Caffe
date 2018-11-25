@@ -23,7 +23,6 @@ plt.style.use('ggplot')
 
 caffe_path = '/home/nvidia/.local/install/caffe/'
 model_log_path = sys.argv[1]
-print model_log_path
 learning_curve_path = sys.argv[2]
 
 #Get directory where the model logs is saved, and move to it
