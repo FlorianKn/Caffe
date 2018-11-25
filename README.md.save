@@ -82,7 +82,7 @@ python kfkd.py
 ### 2.Model definition  
 The architecture of a network is defined in a **.prototxt**. An example of an architecture can be seen below:  
 ```
-name: "example_Network"
+name: "Arch_Baseline"
 layer {
   name: "Input"
   type: "HDF5Data"
@@ -336,7 +336,7 @@ layer {
   top: "loss"
 }
 ```
-*Note: find this file in models/Example/example.prototxt. Reference: https://github.com/qiexing/caffe-regression/blob/master/kaggle_prototxt/fkp_net.prototxt*
+*Find this file in models/Arch_Baseline/baseline.prototxt*
 #### 2.1 Visualizing architecture [Optional]  
 If you want to print your network architecture you have to configure pycaffe. Therefore the **Makefile.config** needs to be adapted.  
 *Note: I use python2.7.12 and numpy needs to be installed.*  
@@ -366,16 +366,16 @@ sudo pip install pydot
 sudo apt-get install graphviz
 ```
 Command for printing is ```python /my/directory/caffe/python/draw_net.py /my/directory/caffe/my/model/myModel.prototxt /my/directory/caffe/myImages/myModel.png```.  
-In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/nvidia/.local/install/caffe/models/Example/example.prototxt /home/nvidia/.local/install/caffe/architectureImg/example.png```.  
+In my case ```python /home/nvidia/.local/install/caffe/python/draw_net.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/baseline.prototxt /home/nvidia/.local/install/caffe/architectureImg/baseline.png```.  
 The image below shows the printed architecture of the .prototxt defined above:
-![Alt text](/architectureImg/example.png?raw=true "ex_01") 
+![Alt text](/architectureImg/baseline.png?raw=true "bl_02") 
 ### 3.Solver definition
 The solver orchestrates model optimization by coordinating the network’s forward inference and backward gradients to form parameter updates that attempt to improve the loss.  
 Reference: http://caffe.berkeleyvision.org/tutorial/solver.html
 
 See my solver below:
 ```
-net: "models/Example/example.prototxt"
+net: "models/Arch_Baseline/baseline.prototxt"
 
 #Nesterov’s Accelerated Gradient
 type: "Nesterov"
@@ -398,17 +398,17 @@ display: 100
 max_iter: 3000
 
 snapshot: 500
-snapshot_prefix: "/home/nvidia/.local/install/caffe/models/Example/"
+snapshot_prefix: "/home/nvidia/.local/install/caffe/models/Arch_Baseline/"
 solver_mode: GPU
 
 test_compute_loss: true
 ```
-*Find this file in /models/Example/solver.prototxt*.   
+*Find this file in /models/Arch_Baseline/solver.prototxt*.   
 All parameters to configure your network: https://github.com/BVLC/caffe/wiki/Solver-Prototxt
 ### 4.Model training
 Start the training with the following command:
 ```
-/home/nvidia/.local/install/caffe/build/tools/caffe train --solver /home/nvidia/.local/install/caffe/models/Example/solver.prototxt 2>&1 | tee /home/nvidia/.local/install/caffe/models/Example/Ex_train.log
+/home/nvidia/.local/install/caffe/build/tools/caffe train --solver /home/nvidia/.local/install/caffe/models/Arch_Baseline/solver.prototxt 2>&1 | tee /home/nvidia/.local/install/caffe/models/Arch_Baseline/Arch_train.log
 ```
 *Note: you need to adapt the paths*.  
 
@@ -418,11 +418,11 @@ to a log file.
 If you want to plot your training curve copy **caffe/python/plot_learning_curve.py** and run the following command:  
 ```
 mkdir learningCurve 
-python /home/nvidia/.local/install/caffe/python/plot_learning_curve.py /home/nvidia/.local/install/caffe/models/Example/Ex_train.log /home/nvidia/.local/install/caffe/learningCurve/example_learning_curve.png
+python /home/nvidia/.local/install/caffe/python/plot_learning_curve.py /home/nvidia/.local/install/caffe/models/Arch_Baseline/Arch_train.log /home/nvidia/.local/install/caffe/learningCurve/baseline_learning_curve.png
 ```
 *Note: you need to adapt your path to your caffe directory in the python script (see line 24). Reference: https://github.com/adilmoujahid/deeplearning-cats-dogs-tutorial.*
 
 See the learning curve of my network below:  
-![Alt text](/learningCurve/example_learning_curve.png?raw=true "curve_01")
+![Alt text](/learningCurve/baseline_learning_curve.png?raw=true "curve_01")
 
 ### 5.Model testing
