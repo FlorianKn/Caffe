@@ -7,8 +7,8 @@ from matplotlib import pyplot
 sys.path.append('/home/nvidia/.local/install/caffe/python')
 
 import caffe
-MODEL_FILE = '/home/nvidia/.local/install/caffe/models/Example/deploy.prototxt'
-PRETRAINED = '/home/nvidia/.local/install/caffe/models/Example/solver_iter_15000.caffemodel' 
+MODEL_FILE = 'models/Example/deploy.prototxt'
+PRETRAINED = 'models/Example/solver_iter_15000.caffemodel' 
 height = 96
 
 
@@ -28,8 +28,8 @@ def plot_sample(x, y, axis):
 
 print os.getcwd()
 
-t = 'dataset/'
-f = h5py.File(t + 'test_data.h5','r')
+t = '/home/nvidia/.local/install/caffe/dataset/'
+f = h5py.File(t + 'test_data_list.txt','r')
 X = f['data'][:]
 print X.shape
 net=caffe.Net(MODEL_FILE,PRETRAINED,caffe.TEST)

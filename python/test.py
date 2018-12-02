@@ -27,7 +27,7 @@ class CNN(object):
         return result
 
 def load():
-    with h5py.File('dataset/val_data.h5', 'r') as hf:
+    with h5py.File('dataset/facialkp-test.hd5', 'r') as hf:
         data = hf.get('data')
         data = np.array(data)
         landmark = hf.get('landmark')
@@ -43,7 +43,7 @@ def draw_landmark(x, y):
  
 X, landmark = load()
 
-cnn = CNN('models/Example/deploy.prototxt', 'models/Example/solver_iter_15000.caffemodel')
+cnn = CNN('/home/nvidia/.local/install/caffe/models/FKPReg/facialkp_predict.prototxt', '/home/nvidia/.local/install/caffe/models/FKPReg/solver_iter_2000.caffemodel')
 
 print X.shape
 for i in range(X.shape[0]):
