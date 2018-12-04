@@ -77,7 +77,7 @@ Copy fkp.py from **dataset/** located in this repository. The script converts CS
 ```
 python fkp.py
 ```
-*Note: the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
+*Note: the python script was adapted from https://github.com/olddocks/caffe-facialkp*
 
 ### 2.Model definition  
 The architecture of a network is defined in a **.prototxt**. An example of an architecture can be seen below:  
@@ -425,7 +425,7 @@ See the learning curve of my network below:
 ### 5.Model testing  
 After training the model, predictions on unseen data can be made.  
 But in its current state, the network is not designed for deployment. A **deploy.prototxt** has to be implemented. Therefore **example.prototxt** needs to be modified (reference: https://github.com/BVLC/caffe/wiki/Using-a-Trained-Network:-Deploy).  
-See my deploy.prototxt below:
+See my **deploy.prototxt** below:
 ```
 name: "example_Network"
 layer {
@@ -434,7 +434,7 @@ layer {
   top: "data"
   top: "label"
   memory_data_param {
-    batch_size: 64 #batch size, so how many prediction youu want to do at once. Best is "1", but higher number get better performance
+    batch_size: 64 #batch size, so how many prediction you want to do at once. Best is "1", but higher number get better performance
     channels: 1
     height: 96
     width: 96 
@@ -664,11 +664,12 @@ layer {
   }
 }
 ```
+*Note: find this file in models/Example/deploy.prototxt. Reference: https://github.com/qiexing/caffe-regression/blob/master/kaggle_prototxt/fkp_deploy.prototxt*
 Now the network can be tested. To display the facial-keypoints on the images, install this first: ```sudo apt-get install python-gi-cairo```. Afterwards run:  
 ```python output.py```  
-*Note: output.py was adapted from https://github.com/olddocks/caffe-facialkp*
+*Note: output.py was adapted from https://github.com/olddocks/caffe-facialkp*.  
 The results are stored in a CSV.
+See an example here:
 
-See an example below:
 ![Alt text](/outputImg/Exampleout.png?raw=true "out_01")
 
