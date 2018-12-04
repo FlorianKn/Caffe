@@ -5,7 +5,6 @@ import h5py
 from scipy.spatial import distance
 from skimage import transform
 from numpy import ravel
-import os
 
 # Make sure that caffe is on the python path:
 #caffe_root = './caffe/'  # this file is expected to be in {caffe_root}/examples
@@ -16,8 +15,8 @@ import caffe
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would l1ike to classify.
-MODEL_FILE = '/home/nvidia/.local/install/caffe/models/FKPReg/facialkp_predict.prototxt'
-PRETRAINED = '/home/nvidia/.local/install/caffe/models/FKPReg/solver_iter_2000.caffemodel'
+MODEL_FILE = '/home/nvidia/.local/install/caffe/models/Example/deploy.prototxt'
+PRETRAINED = '/home/nvidia/.local/install/caffe/models/Example/solver_iter_3000.caffemodel'
 
 def dist(x,y):   
     #return numpy.sqrt(numpy.sum((x-y)**2))
@@ -49,10 +48,13 @@ for i in range(len(X)):
 
 '''
 I = []
+
 for k in xrange(len(X)):
  img = np.fromstring(X[k], sep=' ', count=96*96)
  I.append(ravel(transform.resize(img.reshape(96,96), (24,24) )))
+
 I = np.asarray(I, 'float32')
+
 '''
 # Scale between 0 and 1
 X = X/255
@@ -71,6 +73,7 @@ data[0:len(X),:] = X
 print 'Input Data shape: ', data.shape
 print 'Total batches: ', batches
 
+
 net = caffe.Net(MODEL_FILE,PRETRAINED, caffe.TEST)
 #net.set_mode_gpu()
 
@@ -82,10 +85,11 @@ data4D = X[400:464,:,:,:]
 
 net.set_input_arrays(data4D.astype(np.float32),data4DL.astype(np.float32))
 pred = net.forward()
-ip1 = net.blobs['ip2'].data * 96
+ip1 = net.blobs['fc6'].data * 96
 
 print 'Predicted', ip1
 print 'Shape', ip1.shape
+
 
 predicted = []
 
@@ -101,15 +105,30 @@ for b in xrange(batches):
  pred = net.forward()
  print 'batch ', b, data4D.shape, data4DL.shape
 
- predicted.append(pred['ip2']*96)
+ predicted.append(pred['fc6']*96)
 
 
 predicted = np.asarray(predicted, 'float32')
 predicted = predicted.reshape(batches*BATCH_SIZE,30)
 predicted = predicted[:total,:30]
 
-
-
 print 'Total in Batches ', data4D.shape, batches
 print 'Predicted shape: ', predicted.shape
 print 'Saving to csv..'
+
+
+
+np.savetxt("fkp_output.csv", predicted, delimiter=",")
+
+
+for k in xrange(0,12,1):
+
+ y = predicted[k]
+ print y.reshape(-1,30)
+ 
+ pl.imshow(df['Image'][k].reshape(96,96), cmap='gray' )
+ pl.scatter(y[0::2], y[1::2],  marker='x', s=30)
+ pl.show()
+
+
+

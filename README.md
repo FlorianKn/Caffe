@@ -73,9 +73,9 @@ sudo apt install python-sklearn
 mkdir dataset
 cd dataset  
 ```
-Copy kfkd.py from **dataset/** located in this repository. The script converts CSV to hd5.     
+Copy fkp.py from **dataset/** located in this repository. The script converts CSV to hd5.     
 ```
-python kfkd.py
+python fkp.py
 ```
 *Note: the python script was adapted from http://danielnouri.org/notes/2014/12/17/using-convolutional-neural-nets-to-detect-facial-keypoints-tutorial/*
 
@@ -84,25 +84,25 @@ The architecture of a network is defined in a **.prototxt**. An example of an ar
 ```
 name: "example_Network"
 layer {
-  name: "Input"
+  name: "MyData"
   type: "HDF5Data"
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "dataset/train_data_list.txt"
-    batch_size: 128
+    source: "dataset/train.txt"
+    batch_size: 64
     shuffle: true
   }
   include: { phase: TRAIN }
 }
 layer {
-  name: "Input"
+  name: "MyData"
   type: "HDF5Data"
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "dataset/val_data_list.txt"
-    batch_size: 540
+    source: "dataset/test.txt"
+    batch_size: 100
   }
   include: { phase: TEST }
 }
@@ -375,33 +375,30 @@ Reference: http://caffe.berkeleyvision.org/tutorial/solver.html
 
 See my solver below:
 ```
+# The training protocol buffer definition
 net: "models/Example/example.prototxt"
-
-#Nesterov’s Accelerated Gradient
-type: "Nesterov"
-test_iter: 2
-# testing every 100 iterations
-test_interval: 100
-
-# learning rate
+test_iter: 1
+# Carry out testing every 500 training iterations.
+test_interval: 500
+# The base learning rate, momentum and the weight decay of the network.
 base_lr: 0.001
-lr_policy: "step"
-gamma: 0.2
-#drop learning rate every 1000 iterations
-stepsize: 1000
+weight_decay : 0.0005
+solver_type : NESTEROV
 momentum: 0.9
-
-weight_decay: 0.01
-
+# The learning rate policy
+lr_policy: "fixed"
+gamma: 0.0001
+power: 0.75
+stepsize: 300
+# Display every 100 iterations
 display: 100
-#train for 3000 iterations
+# The maximum number of iterations
 max_iter: 3000
-
-snapshot: 500
+# snapshot intermediate results
+snapshot: 1000
 snapshot_prefix: "/home/nvidia/.local/install/caffe/models/Example/"
+# solver mode: CPU or GPU
 solver_mode: GPU
-
-test_compute_loss: true
 ```
 *Find this file in /models/Example/solver.prototxt*.   
 All parameters to configure your network: https://github.com/BVLC/caffe/wiki/Solver-Prototxt
@@ -425,4 +422,253 @@ python /home/nvidia/.local/install/caffe/python/plot_learning_curve.py /home/nvi
 See the learning curve of my network below:  
 ![Alt text](/learningCurve/example_learning_curve.png?raw=true "curve_01")
 
-### 5.Model testing
+### 5.Model testing  
+After training the model, predictions on unseen data can be made.  
+But in its current state, the network is not designed for deployment. A **deploy.prototxt** has to be implemented. Therefore **example.prototxt** needs to be modified (reference: https://github.com/BVLC/caffe/wiki/Using-a-Trained-Network:-Deploy).  
+See my deploy.prototxt below:
+```
+name: "example_Network"
+layer {
+  name: "data"
+  type: "MemoryData"
+  top: "data"
+  top: "label"
+  memory_data_param {
+    batch_size: 64 #batch size, so how many prediction youu want to do at once. Best is "1", but higher number get better performance
+    channels: 1
+    height: 96
+    width: 96 
+
+  }
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 20
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dropout1"
+  type: "Dropout"
+  bottom: "pool1"
+  top: "pool1"
+  dropout_param {
+    dropout_ratio: 0.1
+  }
+}
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 48
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu2"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "dropout2"
+  type: "Dropout"
+  bottom: "pool2"
+  top: "pool2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "conv3"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+ }
+ layer {
+  name: "relu3"
+  type: "ReLU"
+  bottom: "conv3"
+  top: "conv3"
+}
+layer {
+  name: "dropout3"
+  type: "Dropout"
+  bottom: "conv3"
+  top: "conv3"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc5"
+  type: "InnerProduct"
+  bottom: "conv3"
+  top: "fc5"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  #weight_decay: 1
+  #weight_decay: 0
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 500
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "drop4"
+  type: "Dropout"
+  bottom: "fc5"
+  top: "fc5"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc6"
+  type: "InnerProduct"
+  bottom: "fc5"
+  top: "fc6"
+  #blobs_lr: 1
+  #blobs_lr: 2
+  #weight_decay: 1
+  #weight_decay: 0
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 30
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+```
+Now the network can be tested. To display the facial-keypoints on the images, install this first: ```sudo apt-get install python-gi-cairo```. Afterwards run:  
+```python output.py```  
+*Note: output.py was adapted from https://github.com/olddocks/caffe-facialkp*
+The results are stored in a CSV.
+
+See an example below:
+![Alt text](/outputImg/Exampleout.png?raw=true "out_01")
+
