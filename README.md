@@ -664,12 +664,12 @@ layer {
   }
 }
 ```
-*Note: find this file in models/Example/deploy.prototxt. Reference: https://github.com/qiexing/caffe-regression/blob/master/kaggle_prototxt/fkp_deploy.prototxt*
-Now the network can be tested. To display the facial-keypoints on the images, install this first: ```sudo apt-get install python-gi-cairo```. Afterwards run:  
-```python output.py```  
+*Note: find this file in models/Example/deploy.prototxt. Reference: https://github.com/qiexing/caffe-regression/blob/master/kaggle_prototxt/fkp_deploy.prototxt*  
+Now the network can be tested. To display the facial-keypoints on the images, install this first: ```sudo apt-get install python-gi-cairo```.  
+Afterwards run: ```python output.py```  
 *Note: output.py was adapted from https://github.com/olddocks/caffe-facialkp*.  
-The results are stored in a CSV.
-See an example here:
+The results are stored in a CSV.  
+See an example image below:
 
 ![Alt text](/outputImg/Exampleout.png?raw=true "out_01")
 
