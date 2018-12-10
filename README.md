@@ -412,16 +412,6 @@ Start the training with the following command:
 The ```2>&1 | tee .../Arch_train.log``` part of the command saves screen output
 to a log file.
  
-If you want to plot your training curve copy **caffe/python/plot_learning_curve.py** and run the following command:  
-```
-mkdir learningCurve 
-python /home/nvidia/.local/install/caffe/python/plot_learning_curve.py /home/nvidia/.local/install/caffe/models/Example/Ex_train.log /home/nvidia/.local/install/caffe/learningCurve/example_learning_curve.png
-```
-*Note: you need to adapt your path to your caffe directory in the python script (see line 24). Reference: https://github.com/adilmoujahid/deeplearning-cats-dogs-tutorial.*
-
-See the learning curve of my network below:  
-![Alt text](/learningCurve/example_learning_curve.png?raw=true "curve_01")
-
 ### 5.Model testing  
 After training the model, predictions on unseen data can be made.  
 But in its current state, the network is not designed for deployment. A **deploy.prototxt** has to be implemented. Therefore **example.prototxt** needs to be modified (reference: https://github.com/BVLC/caffe/wiki/Using-a-Trained-Network:-Deploy).  
