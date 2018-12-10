@@ -5,20 +5,44 @@ layer {
   top: "data"
   top: "label"
   hdf5_data_param {
-    source: "dataset/train_data_list.txt"
-    batch_size: 128
+    source: "dataset/train.txt"
+    batch_size: 64
     shuffle: true
   }
+  include: { phase: TRAIN }
 }
+layer {
+  name: "Input"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  hdf5_data_param {
+    source: "dataset/test.txt"
+    batch_size: 100
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  name: "fc"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "fc"
+  inner_product_param {
+    num_output: 500
+  }
+}
+
 layer {
   name: "ip"
   type: "InnerProduct"
-  bottom: "data"
+  bottom: "fc"
   top: "ip"
   inner_product_param {
     num_output: 30
   }
 }
+
 layer {
   name: "loss"
   type: "EuclideanLoss"

@@ -5,7 +5,7 @@ layer {
   top: "data"
   top: "label"
   memory_data_param {
-    batch_size: 64 #batch size, so how many prediction youu want to do at once. Best is "1", but higher number get better performance
+    batch_size: 64 #batch size, so how many prediction you want to do at once. Best is "1", but higher number get better performance
     channels: 1
     height: 96
     width: 96 
