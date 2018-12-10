@@ -1,4 +1,4 @@
-# Caffe
+# Caffe - Facial Keypoint Detection
 
 ## Installation
 Instructions for Ubuntu 16.04.5 LTS  
@@ -73,7 +73,7 @@ sudo apt install python-sklearn
 mkdir dataset
 cd dataset  
 ```
-Copy fkp.py from **dataset/** located in this repository. The script converts CSV to hd5.     
+Copy fkp.py from **dataset/** located in this repository. The script converts CSV to hd5. Add the kaggle dataset to your folder, too.     
 ```
 python fkp.py
 ```

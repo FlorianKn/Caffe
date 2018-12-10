@@ -1,0 +1,36 @@
+name: "Arch_Baseline"
+
+layer {
+  name: "data"
+  type: "MemoryData"
+  top: "data"
+  top: "label"
+  memory_data_param {
+    batch_size: 64 #batch size, so how many prediction you want to do at once. Best is "1", but higher number get better performance
+    channels: 1
+    height: 96
+    width: 96 
+
+  }
+}
+
+layer {
+  name: "fc"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "fc"
+  inner_product_param {
+    num_output: 500
+  }
+}
+
+layer {
+  name: "ip"
+  type: "InnerProduct"
+  bottom: "fc"
+  top: "ip"
+  inner_product_param {
+    num_output: 30
+  }
+}
+
