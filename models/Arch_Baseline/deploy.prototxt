@@ -21,6 +21,10 @@ layer {
   top: "fc"
   inner_product_param {
     num_output: 500
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
 
@@ -31,6 +35,9 @@ layer {
   top: "ip"
   inner_product_param {
     num_output: 30
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
-
