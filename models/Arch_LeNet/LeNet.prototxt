@@ -33,10 +33,13 @@ layer {
     num_output: 32 # the number of filters
     kernel_size: 11 # specifies height and width of each filter --> each filter is 11x11
     stride: 1
-   
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
     bias_filler {
       type: "constant"
-      value: 0.1
+      value: 0
     }
   }
 }
@@ -63,10 +66,13 @@ layer {
     pad: 2
     kernel_size: 7
     group: 2
-   
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
     bias_filler {
       type: "constant"
-      value: 0.1
+      value: 0
     }
   }
 }
@@ -93,10 +99,13 @@ layer {
     pad: 2
     kernel_size: 5
     group: 2
-   
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
     bias_filler {
       type: "constant"
-      value: 0.1
+      value: 0
     }
   }
 }
@@ -123,10 +132,13 @@ layer {
     pad: 2
     kernel_size: 5
     group: 2
-   
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
     bias_filler {
       type: "constant"
-      value: 0.1
+      value: 0
     }
   }
 }
@@ -153,10 +165,13 @@ layer {
     pad: 2
     kernel_size: 5
     group: 2
-   
+    weight_filler {
+      type: "xavier"
+      variance_norm: AVERAGE
+    }
     bias_filler {
       type: "constant"
-      value: 0.1
+      value: 0
     }
   }
 }
@@ -180,6 +195,10 @@ layer {
   top: "fc1"
   inner_product_param {
     num_output: 500
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
 
@@ -190,6 +209,10 @@ layer {
   top: "fc2"
   inner_product_param {
     num_output: 500
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
 
@@ -200,6 +223,10 @@ layer {
   top: "fc3"
   inner_product_param {
     num_output: 500
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
 
@@ -210,6 +237,10 @@ layer {
   top: "fc4"
   inner_product_param {
     num_output: 500
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
 
@@ -220,6 +251,10 @@ layer {
   top: "output"
   inner_product_param {
     num_output: 30
+        weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
   }
 }
 
