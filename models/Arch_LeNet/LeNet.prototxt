@@ -6,7 +6,7 @@ layer {
   top: "label"
   hdf5_data_param {
     source: "dataset/train.txt"
-    batch_size: 64
+    batch_size: 1
     shuffle: true
   }
   include: { phase: TRAIN }
@@ -19,7 +19,7 @@ layer {
   top: "label"
   hdf5_data_param {
     source: "dataset/test.txt"
-    batch_size: 100
+    batch_size: 1
   }
   include: { phase: TEST }
 }
@@ -30,8 +30,8 @@ layer {
   bottom: "data"
   top: "conv1"
   convolution_param {
-    num_output: 32 # the number of filters
-    kernel_size: 11 # specifies height and width of each filter --> each filter is 11x11
+    num_output: 16 # the number of filters
+    kernel_size: 3 # specifies height and width of each filter --> each filter is 11x11
     stride: 1
     weight_filler {
       type: "xavier"
@@ -63,8 +63,8 @@ layer {
   top: "conv2"
   convolution_param {
     num_output: 32
-    pad: 2
-    kernel_size: 7
+    #pad: 2
+    kernel_size: 3
     group: 2
     weight_filler {
       type: "xavier"
@@ -84,7 +84,7 @@ layer {
   top: "pool2"
   pooling_param {
     pool: MAX
-    kernel_size: 7
+    kernel_size: 2
     stride: 1
   }
 }
@@ -95,10 +95,10 @@ layer {
   bottom: "pool2"
   top: "conv3"
   convolution_param {
-    num_output: 32
-    pad: 2
-    kernel_size: 5
-    group: 2
+    num_output: 64
+    #pad: 2
+    kernel_size: 3
+    #group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -128,10 +128,10 @@ layer {
   bottom: "pool3"
   top: "conv4"
   convolution_param {
-    num_output: 64
-    pad: 2
-    kernel_size: 5
-    group: 2
+    num_output: 128
+    #pad: 2
+    kernel_size: 3
+    #group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -150,7 +150,7 @@ layer {
   top: "pool4"
   pooling_param {
     pool: MAX
-    kernel_size: 4
+    kernel_size: 2
     stride: 1
   }
 }
@@ -161,10 +161,10 @@ layer {
   bottom: "pool4"
   top: "conv5"
   convolution_param {
-    num_output: 32
-    pad: 2
-    kernel_size: 5
-    group: 2
+    num_output: 64
+    #pad: 2
+    kernel_size: 3
+    #group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -183,7 +183,7 @@ layer {
   top: "pool5"
   pooling_param {
     pool: MAX
-    kernel_size: 1
+    kernel_size: 2
     stride: 1
   }
 }
@@ -265,5 +265,6 @@ layer {
   bottom: "label"
   top: "loss"
 }
+
 
 
