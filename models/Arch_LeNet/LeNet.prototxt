@@ -31,7 +31,7 @@ layer {
   top: "conv1"
   convolution_param {
     num_output: 16 # the number of filters
-    kernel_size: 3 # specifies height and width of each filter --> each filter is 11x11
+    kernel_size: 3 # specifies height and width of each filter --> each filter is 3x3
     stride: 1
     weight_filler {
       type: "xavier"
@@ -63,9 +63,7 @@ layer {
   top: "conv2"
   convolution_param {
     num_output: 32
-    #pad: 2
     kernel_size: 3
-    group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -96,9 +94,7 @@ layer {
   top: "conv3"
   convolution_param {
     num_output: 64
-    #pad: 2
     kernel_size: 3
-    #group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -129,9 +125,7 @@ layer {
   top: "conv4"
   convolution_param {
     num_output: 128
-    #pad: 2
     kernel_size: 3
-    #group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -162,9 +156,7 @@ layer {
   top: "conv5"
   convolution_param {
     num_output: 64
-    #pad: 2
     kernel_size: 3
-    #group: 2
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
