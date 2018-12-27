@@ -6,7 +6,7 @@ layer {
   top: "label"
   hdf5_data_param {
     source: "dataset/train.txt"
-    batch_size: 64
+    batch_size: 1
     shuffle: true
   }
   include: { phase: TRAIN }
@@ -31,7 +31,7 @@ layer {
   top: "conv1"
   convolution_param {
     num_output: 32 # the number of filters
-    kernel_size: 11 # specifies height and width of each filter --> each filter is 11x11
+    kernel_size: 3 # specifies height and width of each filter --> each filter is 3x3
     stride: 1
     weight_filler {
       type: "xavier"
@@ -51,9 +51,7 @@ layer {
   top: "conv2"
   convolution_param {
     num_output: 32
-    pad: 2
-    kernel_size: 7
-    group: 2
+    kernel_size: 3
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -84,9 +82,7 @@ layer {
   top: "conv3"
   convolution_param {
     num_output: 32
-    pad: 2
-    kernel_size: 5
-    group: 2
+    kernel_size: 3
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -105,9 +101,7 @@ layer {
   top: "conv4"
   convolution_param {
     num_output: 64
-    pad: 2
-    kernel_size: 5
-    group: 2
+    kernel_size: 3
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -126,7 +120,7 @@ layer {
   top: "pool2"
   pooling_param {
     pool: MAX
-    kernel_size: 7
+    kernel_size: 2
     stride: 1
   }
 }
@@ -138,9 +132,7 @@ layer {
   top: "conv5"
   convolution_param {
     num_output: 32
-    pad: 2
-    kernel_size: 5
-    group: 2
+    kernel_size: 3
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -159,9 +151,7 @@ layer {
   top: "conv6"
   convolution_param {
     num_output: 32
-    pad: 2
-    kernel_size: 5
-    group: 2
+    kernel_size: 3
     weight_filler {
       type: "xavier"
       variance_norm: AVERAGE
@@ -215,7 +205,7 @@ layer {
   bottom: "fc1"
   top: "fc2"
   inner_product_param {
-    num_output: 500
+    num_output: 512
         weight_filler {
       type: "gaussian"
       std: 0.01
@@ -254,6 +244,7 @@ layer {
   bottom: "label"
   top: "loss"
 }
+
 
 
 
