@@ -18,7 +18,7 @@ layer {
   top: "conv1"
   convolution_param {
     num_output: 16 # the number of filters
-    kernel_size: 3 # specifies height and width of each filter --> each filter is 11x11
+    kernel_size: 3 # specifies height and width of each filter --> each filter is 3x3
     stride: 1
     weight_filler {
       type: "xavier"
@@ -36,7 +36,7 @@ layer {
   type: "Pooling"
   pooling_param {
     kernel_size: 2
-    stride: 1
+    stride: 2
     pool: MAX
   }
   bottom: "conv1"
@@ -70,7 +70,7 @@ layer {
   pooling_param {
     pool: MAX
     kernel_size: 2
-    stride: 1
+    stride: 2
   }
 }
 
@@ -101,7 +101,7 @@ layer {
   pooling_param {
     pool: MAX
     kernel_size: 2
-    stride: 1
+    stride: 2
   }
 }
 
@@ -132,7 +132,7 @@ layer {
   pooling_param {
     pool: MAX
     kernel_size: 2
-    stride: 1
+    stride: 2
   }
 }
 
@@ -142,7 +142,7 @@ layer {
   bottom: "pool4"
   top: "conv5"
   convolution_param {
-    num_output: 64
+    num_output: 256
     kernel_size: 3
     weight_filler {
       type: "xavier"
@@ -163,7 +163,7 @@ layer {
   pooling_param {
     pool: MAX
     kernel_size: 2
-    stride: 1
+    stride: 2
   }
 }
 
