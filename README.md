@@ -676,10 +676,10 @@ batch size: 32
 ```  
   
 See my results here:  
-| Network  | Average loss  | Average duration |
-|----------|:-------------:|-----------------:|
-| Baseline |  2.482 | 9.112s |
-| LeNet |   1.308  |   25.978s |
-| VGG | 43.321 | 215.959s |  
+| Network  | Average loss  | Average duration |  
+|----------|:-------------:|-----------------:|  
+| Baseline |     2.482     |      9.112s      |  
+| LeNet    |     1.308     |      25.978s     |  
+| VGG      |     43.321    |      215.959s    |  
 
  
