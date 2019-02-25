@@ -681,5 +681,5 @@ See my results here:
 | Baseline |     2.482     |      9.112s      |  
 | LeNet    |     1.308     |      25.978s     |  
 | VGG      |     43.321    |      215.959s    |  
-
- 
+  
+See details in ```Competition.pdf```
