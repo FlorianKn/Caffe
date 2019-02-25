@@ -663,3 +663,14 @@ See an example image below:
 
 ![Alt text](/outputImg/Exampleout.png?raw=true "out_01")
 
+## Competition  
+I trained and tested three networks: Baseline, LeNet and VGG. Find all files in ```models```.
+For training and testing I splitted kaggles training.csv (80% training, 20% testing). The corresponding hd5-files are located in ```dataset```.  
+I used the following hyperparameters:  
+```
+iterations: 250
+solver: ADAM
+learning rate: 0.001
+snapshot: 100
+batch size: 32
+``` 
