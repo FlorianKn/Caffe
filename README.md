@@ -676,16 +676,10 @@ batch size: 32
 ```  
   
 See my results here:  
-| Network  | Average loss  | Average duration  |  
-|----------|:-------------:|-----------------:|  
-| Baseline | 2.482     | 9.112s      |  
-| LeNet    | 1.308     | 25.978s     |  
-| VGG      | 43.321    | 215.959s    |  
-  
-More details in ```Competition.pdf```  
+**Network**|** Average loss**|** Average duration**
+:-----:|:-----:|:-----:
+Baseline| 2.482| 9.112
+LeNet| 1.308| 25.978
+VGG| 43.321| 215.959
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+More details in ```Competition.pdf```  
