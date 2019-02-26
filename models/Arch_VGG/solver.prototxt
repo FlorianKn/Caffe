@@ -18,11 +18,11 @@ gamma: 0.0001
 power: 0.75
 stepsize: 300
 # Display every 100 iterations
-display: 50
+display: 100
 # The maximum number of iterations
-max_iter: 250
+max_iter: 1500
 # snapshot intermediate results
-snapshot: 100
+snapshot: 1000
 snapshot_prefix: "/home/nvidia/.local/install/caffe/models/Arch_VGG/"
 # solver mode: CPU or GPU
 solver_mode: GPU

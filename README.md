@@ -682,4 +682,10 @@ See my results here:
 | LeNet    |     1.308     |      25.978s     |  
 | VGG      |     43.321    |      215.959s    |  
   
-See details in ```Competition.pdf```
+More details in ```Competition.pdf```  
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
