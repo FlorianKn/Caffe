@@ -663,3 +663,29 @@ See an example image below:
 
 ![Alt text](/outputImg/Exampleout.png?raw=true "out_01")
 
+## Competition  
+I trained and tested three networks: Baseline, LeNet and VGG. Find all files in ```models```.
+For training and testing I splitted kaggles training.csv (80% training, 20% testing). The corresponding hd5-files are located in ```dataset```.  
+I used the following hyperparameters:  
+```
+iterations: 250
+solver: ADAM
+learning rate: 0.001
+snapshot: 100
+batch size: 32
+```  
+  
+See my results here:  
+
+**Network**| Average loss| Average duration
+:-----:|:-----:|:-----:
+Baseline| 2.482| 9.112s
+LeNet| 1.308| 25.978s
+VGG| 43.321| 215.959s
+
+The results of VGG were quite bad, so I trained/tested with 1500 Iterations.  
+Average loss = 3.965, average duration = 1243.253 seconds  
+  
+More details in ```Competition.pdf```.  
+
+If you want to train these networks too, see ```cmds.txt```. 
