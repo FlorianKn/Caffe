@@ -677,7 +677,7 @@ batch size: 32
   
 See my results here:  
 
-**Network**|** Average loss**|** Average duration**
+**Network**| Average loss| Average duration
 :-----:|:-----:|:-----:
 Baseline| 2.482| 9.112
 LeNet| 1.308| 25.978
