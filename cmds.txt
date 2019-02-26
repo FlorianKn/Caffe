@@ -1,0 +1,8 @@
+train baseline:
+/home/nvidia/.local/install/caffe/build/tools/caffe train --solver /home/nvidia/.local/install/caffe/models/Arch_Baseline/solver.prototxt 2>&1 | tee /home/nvidia/.local/install/caffe/models/Arch_Baseline/Arch_train.log
+
+train LeNet:
+/home/nvidia/.local/install/caffe/build/tools/caffe train --solver /home/nvidia/.local/install/caffe/models/Arch_LeNet/solver.prototxt 2>&1 | tee /home/nvidia/.local/install/caffe/models/Arch_LeNet/Arch_train.log
+
+train VGG:
+/home/nvidia/.local/install/caffe/build/tools/caffe train --solver /home/nvidia/.local/install/caffe/models/Arch_VGG/solver.prototxt 2>&1 | tee /home/nvidia/.local/install/caffe/models/Arch_VGG/Arch_train.log

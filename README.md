@@ -686,4 +686,6 @@ VGG| 43.321| 215.959s
 The results of VGG were quite bad, so I trained/tested with 1500 Iterations.  
 Average loss = 3.965, average duration = 1243.253 seconds  
   
-More details in ```Competition.pdf``` 
+More details in ```Competition.pdf```.  
+
+If you want to train these networks too, see ```cmds.txt```. 
