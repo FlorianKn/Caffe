@@ -679,13 +679,8 @@ See my results here:
 
 **Network**| Average loss| Average duration
 :-----:|:-----:|:-----:
-Baseline| 2.482| 9.112
-LeNet| 1.308| 25.978
-VGG| 43.321| 215.959
+Baseline| 2.482| 9.112s
+LeNet| 1.308| 25.978s
+VGG| 43.321| 215.959s
 
 More details in ```Competition.pdf```  
-  
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |    
